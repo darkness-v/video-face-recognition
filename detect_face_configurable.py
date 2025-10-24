@@ -165,6 +165,7 @@ def main():
                 # If we've processed the previous frame, skip next 'frame_skip' frames
                 if (processed_frames % (frame_skip + 1)) != 0:
                     process_this = False
+                    processed_frames += 1  # count skipped frames too
 
             best_sim = None
             identified = False
@@ -200,7 +201,7 @@ def main():
                                int(identified), best_sim if best_sim is not None else -1))
 
             if not args.no_display:
-                cv2.imshow('Preview', frame)
+                # cv2.imshow('Preview', frame)
                 if cv2.waitKey(1) & 0xFF == 27:  # ESC
                     print("ESC pressed; exiting.")
                     break
@@ -227,6 +228,7 @@ def main():
     print(f"Similarity threshold: {similarity_threshold}")
     print(f"Frames total        : {total_frames}")
     print(f"Frames processed    : {processed_frames}")
+    print(f"Time elapsed       : {elapsed:.2f} sec")
     print(f"Frames identified   : {identified_frames}")
     print(f"Processing FPS      : {effective_fps:.2f} frames/sec")
     print(f"Real-time factor    : {realtime_ratio:.2f} (>=1 means faster than real-time)")
